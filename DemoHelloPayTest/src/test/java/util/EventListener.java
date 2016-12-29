@@ -3,7 +3,7 @@ package util;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
-import com.hellopay.test.RegisterAndRestorePassSuite;
+import com.hellopay.test.RegisterAndRestorePassTest;
 
 /**
  * Created by vuthaiduong on 12/29/16.
@@ -15,7 +15,7 @@ import com.hellopay.test.RegisterAndRestorePassSuite;
     @Override
     public void onTestFailure(ITestResult result) {
 
-        driver = RegisterAndRestorePassSuite.getDriver();
+        driver = RegisterAndRestorePassTest.getDriver();
 
 
         if (driver != null) {

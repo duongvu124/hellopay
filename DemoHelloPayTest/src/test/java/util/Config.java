@@ -8,12 +8,11 @@ public class Config {
     // register
 
     public static String registerUrl = "https://hellopay.io/register/consumer";
-//    public static String country = "Singapore";
     public static String country = "Malaysia";
     public static String name = "Duong Vu";
     public static String prefix = "+84";
     public static String phoneNumber = "999640477";
-    public static String email = "testforever900@gmail.com";
+    public static String email = "duongvu@chotot.vn";
     public static String password = "Testforever1";
 
     public static String verificationCode = "123456";

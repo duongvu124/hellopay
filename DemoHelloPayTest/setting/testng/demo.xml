@@ -6,10 +6,10 @@
     </listeners>
     <test name="BUMP API Stress Test" preserve-order="true">
         <classes>
-            <class name="com.hellopay.test.RegisterAndRestorePassSuite">
+            <class name="com.hellopay.test.RegisterAndRestorePassTest">
                 <methods>
-                    <include name="runRegisterAccountTest" />
-                    <include name="runForgotPassword" />
+                    <include name="register" />
+                    <include name="resetPassword" />
                 </methods>
             </class>
         </classes>

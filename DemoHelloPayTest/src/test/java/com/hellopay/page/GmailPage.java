@@ -1,6 +1,5 @@
 package com.hellopay.page;
 
-//import com.oracle.tools.packager.Log;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -44,29 +43,23 @@ public class GmailPage extends PageMaster {
     public void inputEmail(String email){
         wait.until(ExpectedConditions.elementToBeClickable(tbEmail));
         UIComponent.fillText(tbEmail, email);
-//        Log.info(" Email Is:  " + email);
         btnNext.click();
-//        Log.info(" Click on Next button");
     }
 
     public void inputPassword(String password){
         wait.until(ExpectedConditions.elementToBeClickable(tbPassword));
         UIComponent.fillText(tbPassword, password);
-//        Log.info(" Password Is:  " + password);
         btnSignIn.click();
-//        Log.info(" Click on SignIn button");
     }
 
     public void selectGmail(){
         wait.until(ExpectedConditions.elementToBeClickable(gmail));
         gmail.click();
-//        Log.info(" Click on Gmail icon");
     }
 
     public void closeIntruction(){
         driver.switchTo().frame(":58.i");
         iconClose.click();
-//        Log.info(" Click on x icon");
     }
 
     public void selectInboxFolder(){

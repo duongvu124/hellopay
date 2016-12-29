@@ -1,17 +1,16 @@
 package util;
 
-//import com.oracle.tools.packager.Log;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+
 
 /**
  * Created by vuthaiduong on 12/28/16.
  */
 public class UIComponent {
     public static void printPageInfo(WebDriver driver){
-//        Log.debug("Load page url: " + driver.getCurrentUrl() + " - Done");
-//        Log.debug("Load page title: " + driver.getTitle() + " - Done");
     }
 
     public static boolean selectDropDownBoxItemByVisibleText(WebElement dropDownBox,
@@ -27,14 +26,17 @@ public class UIComponent {
     }
 
     public static void fillText(WebElement inputElement, String inputText ){
-
             inputElement.clear();
             inputElement.sendKeys(inputText);
-//            Log.info("Fill : " + inputText + " in element : " + inputElement.getAttribute("name"));
     }
 
     public void checkVerificationCodeinMail(){
 
+    }
+
+    public static void clickByJS(WebDriver driver, WebElement element){
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        executor.executeScript("arguments[0].click();", element);
     }
 
 }

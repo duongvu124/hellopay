@@ -42,27 +42,32 @@ public class RegisterPage extends PageMaster {
     @FindBy(how = How.XPATH, using = "//*[text()='Login Now']")
     private WebElement txLoginNow;
 
-    // Login page
+    // Warning message
+    @FindBy(how = How.XPATH, using = "//*[text()='Name is required.']")
+    private WebElement noNameWarning;
 
-    @FindBy(how = How.ID, using = "email")
-    private WebElement tbLoginAccount;
+    @FindBy(how = How.XPATH, using = "//*[text()='Sorry, but you have to provide a phone number to proceed. Please enter a valid phone number and try again.']")
+    private WebElement noPhoneNumberWarning;
 
-    @FindBy(how = How.ID, using = "password")
-    private WebElement tbPasswordLogin;
+    @FindBy(how = How.XPATH, using = "//*[text()='Sorry, this phone number is already registered. Please check your number or ']")
+    private WebElement existPhoneNumberWarning;
 
-    @FindBy(how = How.ID, using = "login")
-    private WebElement btnLogin;
+    @FindBy(how = How.XPATH, using = "//*[text()='The mobile number or email is already registered. If this is yours, please ']")
+    private WebElement existPhoneNumberAndEmailWarning;
 
-    @FindBy(how = How.XPATH, using = "//*[text()='Forgot your password?']")
-    private WebElement txForgotPassword;
+    @FindBy(how = How.XPATH, using = "//*[text()='Please double check your email address.']")
+    private WebElement noEmailWarning;
 
-    // Forgot password page
+    @FindBy(how = How.XPATH, using = "//*[text()='Sorry, this email address is already registered. Please check your address or ']")
+    private WebElement existEmailWarning;
 
-    @FindBy(how = How.ID, using = "uid")
-    private WebElement tbRecoveryEmail;
+    @FindBy(how = How.XPATH, using = "//*[text()='Please choose a password of at least 8 characters, containing capital letter and number.']")
+    private WebElement noPasswordWarning;
 
-    @FindBy(how = How.ID, using = "login")
-    private WebElement btnResetPassword;
+
+
+
+
 
     // verify OTP
 
@@ -79,65 +84,72 @@ public class RegisterPage extends PageMaster {
     WebDriverWait wait = new WebDriverWait(driver, 15);
 
     public void selectCountry(String country) throws Exception{
-//        wait.until(ExpectedConditions.elementToBeClickable(dropboxCountry));
-//        UIComponent.selectDropDownBoxItemByVisibleText(dropboxCountry, country);
-//        Select countrySelect = new Select(dropboxCountry);
-//        countrySelect.selectByVisibleText(country);
+
         dropboxCountry.click();
         String countryXpath = "//li/span[text()='"+country+"']/..";
-//        Thread.sleep(2000);
         WebElement countryEl = driver.findElement(By.xpath(countryXpath));
         wait.until(ExpectedConditions.elementToBeClickable(countryEl));
-        clickByJS(countryEl);
-//        Log.info( country + " is selected");
+        UIComponent.clickByJS(driver, countryEl);
     }
 
-    private void clickByJS(WebElement element){
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
-        executor.executeScript("arguments[0].click();", element);
-    }
+
 
     public void inputFullName(String name){
         wait.until(ExpectedConditions.elementToBeClickable(tbFullName));
         UIComponent.fillText(tbFullName, name);
-//        Log.info(" Full Name Is:  " + name);
     }
 
     public void inputPhoneNumber(String prefix, String phoneNumber){
         UIComponent.fillText(tbMobilePrefix, prefix);
         UIComponent.fillText(tbMobile, phoneNumber);
-//        Log.info(" Phone Number Is:  " + prefix + " " + phoneNumber);
     }
 
     public void inputEmail(String email){
         UIComponent.fillText(tbEmail, email);
-//        Log.info(" Email Is:  " + email);
     }
 
     public void inputPassword(String password){
         UIComponent.fillText(tbPassword, password);
-//        Log.info(" Password Is:  " + password);
     }
 
     public void submitRegister(){
         btnRegister.click();
-//        Log.info(" Click on OpenAccount Now button");
     }
 
     public void inputVerificationCode(String code){
         wait.until(ExpectedConditions.elementToBeClickable(tbVerificationCode));
         UIComponent.fillText(tbVerificationCode, code);
-//        Log.info(" Verification Code Is:  " + code);
         btnConfirmVerificationCode.click();
     }
 
-    public void inputForgottenEmail(String email){
-        UIComponent.fillText(tbRecoveryEmail, email);
-//        Log.info(" Recovery Email Is :  " + email);
+
+
+    // Assert Warning
+    public boolean isNoNameWarning(){
+        return noNameWarning.isDisplayed();
+    }
+    public boolean isNoPhoneNumberWarning(){
+        return noPhoneNumberWarning.isDisplayed();
+    }
+    public boolean isExistPhoneNumberWarning(){
+        return existPhoneNumberWarning.isDisplayed();
+    }
+    public boolean isExistPhoneNumberAndEmailWarning(){
+        return existPhoneNumberAndEmailWarning.isDisplayed();
+    }
+    public boolean isNoEmailWarning(){
+        return noEmailWarning.isDisplayed();
+    }
+    public boolean isExistEmailWarning(){
+        return existEmailWarning.isDisplayed();
+    }
+    public boolean isNoPasswordWarning(){
+        return noPasswordWarning.isDisplayed();
     }
 
-    public void resetPassword(){
-//        Log.info(" Begin to reset password");
-        btnResetPassword.click();
+    public boolean isTbVerificationCode() throws InterruptedException {
+        wait(4000);
+        return tbVerificationCode.isDisplayed();
     }
+
 }
