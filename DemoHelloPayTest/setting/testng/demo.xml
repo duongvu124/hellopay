@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Test Demo">
+    <listeners>
+        <listener class-name="util.EventListener"/>
+    </listeners>
+    <test name="BUMP API Stress Test" preserve-order="true">
+        <classes>
+            <class name="com.hellopay.test.RegisterAndRestorePassSuite">
+                <methods>
+                    <include name="runRegisterAccountTest" />
+                    <include name="runForgotPassword" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
+
