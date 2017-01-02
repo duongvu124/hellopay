@@ -30,10 +30,6 @@ public class UIComponent {
             inputElement.sendKeys(inputText);
     }
 
-    public void checkVerificationCodeinMail(){
-
-    }
-
     public static void clickByJS(WebDriver driver, WebElement element){
         JavascriptExecutor executor = (JavascriptExecutor)driver;
         executor.executeScript("arguments[0].click();", element);

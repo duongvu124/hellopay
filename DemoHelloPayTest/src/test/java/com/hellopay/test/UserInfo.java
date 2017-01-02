@@ -13,7 +13,6 @@ public class UserInfo {
     private String password;
     private String inCase;
 
-
     public UserInfo(){
     }
 
@@ -25,9 +24,7 @@ public class UserInfo {
         this.email = email;
         this.password = password;
         this.inCase = inCase;
-
     }
-
 
     public void setCountry(String country){
         this.country = country;
@@ -76,5 +73,4 @@ public class UserInfo {
     public String getInCase(){
         return inCase;
     }
-
 }

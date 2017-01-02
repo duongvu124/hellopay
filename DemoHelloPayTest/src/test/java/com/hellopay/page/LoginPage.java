@@ -4,6 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import util.UIComponent;
 
 /**
  * Created by vuthaiduong on 12/30/16.
@@ -25,5 +28,17 @@ public class LoginPage extends PageMaster{
 
     public LoginPage(WebDriver driver) {
         super(driver);
+    }
+
+    public void inputEmail(String email){
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(tbLoginAccount));
+        UIComponent.fillText(tbLoginAccount, email);
+    }
+    public void inputPassword(String password){
+        UIComponent.fillText(tbPasswordLogin, password);
+    }
+    public void submit(){
+        btnLogin.click();
     }
 }

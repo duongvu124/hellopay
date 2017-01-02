@@ -64,18 +64,12 @@ public class RegisterPage extends PageMaster {
     @FindBy(how = How.XPATH, using = "//*[text()='Please choose a password of at least 8 characters, containing capital letter and number.']")
     private WebElement noPasswordWarning;
 
-
-
-
-
-
-    // verify OTP
+    // verify mobile
+    @FindBy(how = How.XPATH, using = "//*[text()='Resend SMS']")
+    private WebElement txtResendSMS;
 
     @FindBy(how = How.ID, using = "emailVerificationCode")
     private WebElement tbVerificationCode;
-
-    @FindBy(how = How.ID, using = "emailVerificationCode")
-    private WebElement btnConfirmVerificationCode;
 
     public RegisterPage(WebDriver driver) {
         super(driver);
@@ -91,8 +85,6 @@ public class RegisterPage extends PageMaster {
         wait.until(ExpectedConditions.elementToBeClickable(countryEl));
         UIComponent.clickByJS(driver, countryEl);
     }
-
-
 
     public void inputFullName(String name){
         wait.until(ExpectedConditions.elementToBeClickable(tbFullName));
@@ -115,14 +107,6 @@ public class RegisterPage extends PageMaster {
     public void submitRegister(){
         btnRegister.click();
     }
-
-    public void inputVerificationCode(String code){
-        wait.until(ExpectedConditions.elementToBeClickable(tbVerificationCode));
-        UIComponent.fillText(tbVerificationCode, code);
-        btnConfirmVerificationCode.click();
-    }
-
-
 
     // Assert Warning
     public boolean isNoNameWarning(){
@@ -150,6 +134,10 @@ public class RegisterPage extends PageMaster {
     public boolean isTbVerificationCode() throws InterruptedException {
         wait(4000);
         return tbVerificationCode.isDisplayed();
+    }
+    public boolean isTxtResendSMS() throws InterruptedException {
+        wait(4000);
+        return txtResendSMS.isDisplayed();
     }
 
 }

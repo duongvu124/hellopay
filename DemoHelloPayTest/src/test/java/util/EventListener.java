@@ -17,7 +17,6 @@ import com.hellopay.test.RegisterAndRestorePassTest;
 
         driver = RegisterAndRestorePassTest.getDriver();
 
-
         if (driver != null) {
 
         }

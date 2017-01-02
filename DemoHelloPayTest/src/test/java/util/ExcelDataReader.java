@@ -20,11 +20,8 @@ public class ExcelDataReader {
         List<List<String>> data = new ArrayList();
 
         FileInputStream file = new FileInputStream(new File(testDataFile));
-        //Create Workbook instance holding reference to .xlsx file
         Workbook workbook = WorkbookFactory.create(file);
-        //Get first/desired sheet from the workbook
         Sheet sheet = workbook.getSheet(sheetName);
-        //Iterate through each rows one by one
         Iterator<Row> rowIterator = sheet.iterator();
         System.out.println("SheetName: " + sheet.getSheetName());
         boolean flagEof = false;
@@ -45,18 +42,15 @@ public class ExcelDataReader {
                                 str = row.getCell(i).getStringCellValue();
                             }
                             dataRow.add(str);
-
                         }
                     }
                     data.add(dataRow);
                 } else {
                     flagEof = true;
                 }
-
         }
         return convertListToArray(data);
         }
-
 
     private static Object[][] convertListToArray(List<List<String>> data) {
         Object[][] retObjArr = new Object[data.size()-1][data.get(0).size()];

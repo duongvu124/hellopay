@@ -1,6 +1,7 @@
 package com.hellopay.test;
 
 import com.hellopay.page.ForgottenPasswordPage;
+import com.hellopay.page.LoginPage;
 import com.hellopay.page.RegisterPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -12,11 +13,14 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import util.Config;
 import util.ExcelDataReader;
+import util.FetchingMail;
 
 import static util.Config.email;
 import java.awt.Desktop;
 import java.io.File;
-
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by vuthaiduong on 12/28/16.
@@ -38,7 +42,6 @@ public class RegisterAndRestorePassTest {
         return driver;
     }
 
-
     @DataProvider(name = "USERINFO")
     public Object[][] createData() throws Exception {
         Object[][] data = ExcelDataReader.getDataFromExl("data/data.xlsx", "UserInfo");
@@ -54,7 +57,6 @@ public class RegisterAndRestorePassTest {
             userInfo.setInCase(String.valueOf(data[i][6]));
             userData[i][0] = userInfo;
         }
-
         return userData;
     }
 
@@ -74,34 +76,68 @@ public class RegisterAndRestorePassTest {
 
         switch (Integer.parseInt(userInfo.getInCase())) {
             case 1:
+                // empty fullName
                 Assert.assertTrue(registerPage.isNoNameWarning());
                 break;
             case 2:
+                // empty prefix
                 Assert.assertTrue(registerPage.isNoPhoneNumberWarning());
                 break;
             case 3:
+                // empty phone number
                 Assert.assertTrue(registerPage.isNoPhoneNumberWarning());
                 break;
             case 4:
+                // empty email
                 Assert.assertTrue(registerPage.isNoEmailWarning());
                 break;
             case 5:
+                // empty password
                 Assert.assertTrue(registerPage.isNoPasswordWarning());
                 break;
             case 6:
+                // wrong password
                 Assert.assertTrue(registerPage.isNoPasswordWarning());
                 break;
             case 7:
+                // duplicate phone number
                 Assert.assertTrue(registerPage.isExistPhoneNumberWarning());
                 break;
             case 8:
+                // duplicate email
                 Assert.assertTrue(registerPage.isExistEmailWarning());
                 break;
             case 9:
+                // duplicate phone number + duplicate email
                 Assert.assertTrue(registerPage.isExistPhoneNumberAndEmailWarning());
                 break;
             case 10:
-                Assert.assertTrue(registerPage.isTbVerificationCode());
+                // successful case
+                if(registerPage.isTbVerificationCode()){
+                    String url = null;
+                    FetchingMail fetchingMail = new FetchingMail();
+                    List<StringBuilder> list = fetchingMail.fetchMailBody(Config.host, Config.mailStoreType,
+                            userInfo.getEmail(), userInfo.getPassword());
+                    while(list.size()==0){
+                        wait(10000);
+                        list = fetchingMail.fetchMailBody(Config.host, Config.mailStoreType,
+                                userInfo.getEmail(), userInfo.getPassword());
+                    }
+                    StringBuilder body = list.get(0);
+                    String regex = ".*(http\\S*)(<|>)";
+                Pattern pattern = Pattern.compile(regex);
+                Matcher matcher = pattern.matcher(body.toString());
+                if(matcher.find()){
+                    url = matcher.group(1);
+                }
+                    driver.get(url);
+                    LoginPage loginPage = new LoginPage(driver);
+                    loginPage.inputEmail(userInfo.getEmail());
+                    loginPage.inputPassword(userInfo.getPassword());
+                    loginPage.submit();
+                    Assert.assertTrue(registerPage.isTxtResendSMS());
+                    System.out.println("Verify Mail Is Successful");
+                }
                 break;
         }
     }
@@ -120,7 +156,6 @@ public class RegisterAndRestorePassTest {
         if (Desktop.isDesktopSupported()) {
             File reportFile = new File("target/surefire-reports/index.html");
             Desktop.getDesktop().browse(reportFile.toURI());
-//            }
         }
     }
 }
