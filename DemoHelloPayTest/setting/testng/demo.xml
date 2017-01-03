@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Test Demo">
-    <test name="BUMP API Stress Test" preserve-order="true">
+    <test name="HELLO PAY TEST DEMO" preserve-order="true">
         <classes>
             <class name="com.hellopay.test.RegisterAndRestorePassTest">
                 <methods>
